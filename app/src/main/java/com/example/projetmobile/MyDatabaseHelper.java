@@ -27,7 +27,6 @@ class MyDatabaseHelper extends SQLiteOpenHelper {
         this.context = context;
     }
 
-
     @Override
     public void onCreate(SQLiteDatabase db) {
         String query = "CREATE TABLE " + TABLE_NAME +
@@ -36,7 +35,6 @@ class MyDatabaseHelper extends SQLiteOpenHelper {
                 COLUMN_AUTHOR + " TEXT, " +
                 COLUMN_PAGES + " INTEGER);";
         db.execSQL(query);
-
     }
     @Override
     public void onUpgrade(SQLiteDatabase db, int i, int i1) {
@@ -54,9 +52,11 @@ class MyDatabaseHelper extends SQLiteOpenHelper {
         long result = db.insert(TABLE_NAME,null, cv);
         if(result == -1){
             Toast.makeText(context, "Failed", Toast.LENGTH_SHORT).show();
+
         }else {
             Toast.makeText(context, "Added Successfully!", Toast.LENGTH_SHORT).show();
         }
+
     }
 
     Cursor readAllData(){

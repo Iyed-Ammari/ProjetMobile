@@ -1,26 +1,32 @@
 package com.example.projetmobile;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
 public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHolder> {
+
     private Context context;
     private Activity activity;
     private ArrayList book_id, book_title, book_author, book_pages;
-    int position;
-    CustomAdapter( Context context, ArrayList book_id, ArrayList book_title, ArrayList book_author,
+
+    CustomAdapter(Activity activity, Context context, ArrayList book_id, ArrayList book_title, ArrayList book_author,
                   ArrayList book_pages){
         this.activity = activity;
         this.context = context;
@@ -29,6 +35,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
         this.book_author = book_author;
         this.book_pages = book_pages;
     }
+
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -37,25 +44,26 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
         return new MyViewHolder(view);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
-    public void onBindViewHolder(@NonNull final MyViewHolder holder, final int position) {
-        this.position = position;
+    public void onBindViewHolder(@NonNull final MyViewHolder holder, @SuppressLint("RecyclerView") final int position) {
         holder.book_id_txt.setText(String.valueOf(book_id.get(position)));
         holder.book_title_txt.setText(String.valueOf(book_title.get(position)));
         holder.book_author_txt.setText(String.valueOf(book_author.get(position)));
         holder.book_pages_txt.setText(String.valueOf(book_pages.get(position)));
-
+        //Recyclerview onClickListener
         holder.mainLayout.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(View view) {
                 Intent intent = new Intent(context, UpdateActivity.class);
-                intent.putExtra("id",String.valueOf(book_id.get(position)));
-                intent.putExtra("title",String.valueOf(book_title.get(position)));
-                intent.putExtra("author",String.valueOf(book_author.get(position)));
-                intent.putExtra("pages",String.valueOf(book_pages.get(position)));
-                context.startActivity(intent);
+                intent.putExtra("id", String.valueOf(book_id.get(position)));
+                intent.putExtra("title", String.valueOf(book_title.get(position)));
+                intent.putExtra("author", String.valueOf(book_author.get(position)));
+                intent.putExtra("pages", String.valueOf(book_pages.get(position)));
+                activity.startActivityForResult(intent, 1);
             }
         });
+
 
     }
 
@@ -76,7 +84,9 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
             book_author_txt = itemView.findViewById(R.id.book_author_txt);
             book_pages_txt = itemView.findViewById(R.id.book_pages_txt);
             mainLayout = itemView.findViewById(R.id.mainLayout);
+            //Animate Recyclerview
         }
 
     }
+
 }

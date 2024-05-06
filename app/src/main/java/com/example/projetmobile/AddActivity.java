@@ -27,9 +27,9 @@ public class AddActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-        title_input = findViewById(R.id.title_input);
-        author_input = findViewById(R.id.author_input);
-        pages_input = findViewById(R.id.pages_input);
+        title_input = findViewById(R.id.title_input2);
+        author_input = findViewById(R.id.author_input2);
+        pages_input = findViewById(R.id.pages_input2);
         add_button = findViewById(R.id.update_button);
         add_button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -38,6 +38,7 @@ public class AddActivity extends AppCompatActivity {
                 myDB.addBook(title_input.getText().toString().trim(),
                         author_input.getText().toString().trim(),
                         Integer.valueOf(pages_input.getText().toString().trim()));
+
             }
         });
     }
